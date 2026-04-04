@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zagreb Events – What's On in the City</title>
+  <meta name="description" content="Discover the best events, concerts, festivals and things to do in Zagreb. Updated daily." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1612;
+      --terracotta: #c4622d;
+      --terracotta-light: #e8835a;
+      --muted: #8a7f74;
+      --border: #ddd5c8;
+      --card-bg: #ffffff;
+      --tag-music: #2d5a8e;
+      --tag-festival: #6b3fa0;
+      --tag-art: #2d7a4f;
+      --tag-sport: #8e2d2d;
+      --tag-theatre: #7a6b2d;
+      --tag-other: #5a5a5a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--cream);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--dark);
+      color: var(--cream);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 3px solid var(--terracotta);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .logo-zg {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--terracotta);
+      letter-spacing: -1px;
+    }
+
+    .logo-events {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--cream);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .header-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dark);
+      color: var(--cream);
+      padding: 4rem 2rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: 'ZG';
+      position: absolute;
+      right: -2rem;
+      top: -2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 18rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--terracotta-light);
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: #b0a89e;
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    /* ── FILTERS ── */
+    .filters-bar {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 64px;
+      z-index: 90;
+    }
+
+    .filters-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.75rem 0;
+      scrollbar-width: none;
+    }
+
+    .filters-inner::-webkit-scrollbar { display: none; }
+
+    .filter-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-right: 0.5rem;
+      font-weight: 500;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--dark);
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-weight: 400;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--terracotta);
+      color: var(--terracotta);
+    }
+
+    .filter-btn.active {
+      background: var(--dark);
+      border-color: var(--dark);
+      color: var(--cream);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .event-count {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ── EVENT GRID ── */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .event-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .card-date-strip {
+      background: var(--dark);
+      color: var(--cream);
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .card-time {
+      font-size: 0.75rem;
+      color: var(--terracotta-light);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .card-body {
+      padding: 1.1rem 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-category {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .cat-music    { color: var(--tag-music); }
+    .cat-festival { color: var(--tag-festival); }
+    .cat-art      { color: var(--tag-art); }
+    .cat-sport    { color: var(--tag-sport); }
+    .cat-theatre  { color: var(--tag-theatre); }
+    .cat-other    { color: var(--tag-other); }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .card-location {
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .card-link {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--terracotta);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+
+    .card-link:hover { color: var(--dark); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--muted);
+    }
+
+    .empty-state p {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state small { font-size: 0.82rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: var(--muted);
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      font-size: 0.78rem;
+      line-height: 1.8;
+    }
+
+    footer span { color: var(--terracotta); }
+
+    /* ── LOADING ── */
+    .loading {
+      text-align: center;
+      padding: 4rem;
+      color: var(--muted);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 2.5rem 1.25rem 2rem; }
+      .hero::before { font-size: 10rem; }
+      .main { padding: 1.5rem 1rem; }
+      .events-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="/" class="logo">
+        <span class="logo-zg">ZG</span>
+        <span class="logo-events">Events</span>
+      </a>
+      <div class="header-meta">
+        Updated daily · Zagreb, Croatia<br>
+        <span id="last-updated" style="color:#5a5a5a">—</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">What's on in Zagreb</p>
+      <h1>Your city,<br><em>every day.</em></h1>
+      <p>Concerts, festivals, exhibitions, theatre, sport — everything happening in Zagreb, curated and updated automatically every morning.</p>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <div class="filters-bar">
+    <div class="filters-inner">
+      <span class="filter-label">Filter</span>
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="Music">Music</button>
+      <button class="filter-btn" data-filter="Festival">Festival</button>
+      <button class="filter-btn" data-filter="Art">Art</button>
+      <button class="filter-btn" data-filter="Theatre">Theatre</button>
+      <button class="filter-btn" data-filter="Sport">Sport</button>
+      <button class="filter-btn" data-filter="Other">Other</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="section-header">
+      <h2 class="section-title">Upcoming Events</h2>
+      <span class="event-count" id="event-count">Loading…</span>
+    </div>
+    <div class="events-grid" id="events-grid">
+      <div class="loading">Loading events…</div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>ZG Events</span> · Zagreb, Croatia<br>
+    Events scraped daily from local sources · Not affiliated with any venue<br>
+    Built with ♥ for the city of Zagreb
+  </footer>
+
+  <script>
+    const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + 'T00:00:00');
+      const day = d.getDate();
+      const month = MONTHS[d.getMonth()];
+      const weekday = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+      return `${weekday}, ${day} ${month}`;
+    }
+
+    function getCategoryClass(cat) {
+      const map = { Music:'music', Festival:'festival', Art:'art', Sport:'sport', Theatre:'theatre' };
+      return 'cat-' + (map[cat] || 'other');
+    }
+
+    function buildCard(ev, index) {
+      const card = document.createElement('div');
+      card.className = 'event-card';
+      card.style.animationDelay = (index * 60) + 'ms';
+      card.dataset.category = ev.category || 'Other';
+
+      const timeStr = ev.time ? `${ev.time}h` : '';
+      const catClass = getCategoryClass(ev.category);
+
+      card.innerHTML = `
+        <div class="card-date-strip">
+          <span class="card-date">${formatDate(ev.date)}</span>
+          ${timeStr ? `<span class="card-time">${timeStr}</span>` : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-category ${catClass}">${ev.category || 'Event'}</div>
+          <div class="card-title">${ev.title}</div>
+          <div class="card-desc">${ev.description || ''}</div>
+          <div class="card-footer">
+            <span class="card-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              ${ev.location}
+            </span>
+            ${ev.url ? `<a class="card-link" href="${ev.url}" target="_blank" rel="noopener">More info →</a>` : ''}
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    let allEvents = [];
+    let activeFilter = 'all';
+
+    function renderEvents(events) {
+      const grid = document.getElementById('events-grid');
+      grid.innerHTML = '';
+      const count = document.getElementById('event-count');
+
+      if (!events.length) {
+        grid.innerHTML = `<div class="empty-state"><p>No events found.</p><small>Try a different filter or check back tomorrow.</small></div>`;
+        count.textContent = '0 events';
+        return;
+      }
+
+      events.forEach((ev, i) => grid.appendChild(buildCard(ev, i)));
+      count.textContent = `${events.length} event${events.length !== 1 ? 's' : ''}`;
+    }
+
+    function applyFilter(filter) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+      const filtered = filter === 'all'
+        ? allEvents
+        : allEvents.filter(e => (e.category || 'Other') === filter);
+      renderEvents(filtered);
+    }
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+    });
+
+    // Load events
+    async function loadEvents() {
+      try {
+        const res = await fetch('events.json?v=' + Date.now());
+        const data = await res.json();
+
+        // Sort by date
+        allEvents = (data.events || []).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        // Last updated
+        if (data.last_updated) {
+          const d = new Date(data.last_updated);
+          document.getElementById('last-updated').textContent =
+            'Last updated: ' + d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+        }
+
+        renderEvents(allEvents);
+      } catch (e) {
+        document.getElementById('events-grid').innerHTML =
+          `<div class="empty-state"><p>Could not load events.</p><small>Please try again later.</small></div>`;
+        document.getElementById('event-count').textContent = '—';
+      }
+    }
+
+    loadEvents();
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+  "last_updated": "2026-03-27T08:00:00",
+  "events": [
+    {
+      "id": 1,
+      "title": "Jazz Evening at Tvornica Kulture",
+      "date": "2026-03-28",
+      "time": "20:00",
+      "location": "Tvornica Kulture",
+      "category": "Music",
+      "description": "An unforgettable evening of jazz featuring local and international artists.",
+      "url": "https://www.entrio.hr",
+      "image": ""
+    },
+    {
+      "id": 2,
+      "title": "Zagreb Street Food Festival",
+      "date": "2026-03-29",
+      "time": "12:00",
+      "location": "Trg bana Jelačića",
+      "category": "Festival",
+      "description": "Taste the best street food from Zagreb and beyond. Over 50 vendors!",
+      "url": "https://www.infozagreb.hr",
+      "image": ""
+    },
+    {
+      "id": 3,
+      "title": "Modern Art Exhibition – 'Horizons'",
+      "date": "2026-03-30",
+      "time": "10:00",
+      "location": "Muzej suvremene umjetnosti",
+      "category": "Art",
+      "description": "A new exhibition showcasing emerging Croatian contemporary artists.",
+      "url": "https://www.msu.hr",
+      "image": ""
+    },
+    {
+      "id": 4,
+      "title": "Electronic Night: Boiler Room Zagreb",
+      "date": "2026-04-01",
+      "time": "22:00",
+      "location": "Šalata",
+      "category": "Music",
+      "description": "Zagreb's underground electronic scene meets the world stage.",
+      "url": "https://www.entrio.hr",
+      "image": ""
+    },
+    {
+      "id": 5,
+      "title": "Zagreb Spring Marathon",
+      "date": "2026-04-05",
+      "time": "09:00",
+      "location": "Bundek",
+      "category": "Sport",
+      "description": "Annual spring marathon through the beautiful streets of Zagreb.",
+      "url": "https://www.zagreb-marathon.com",
+      "image": ""
+    },
+    {
+      "id": 6,
+      "title": "Theatre: 'Hamlet' – HNK Zagreb",
+      "date": "2026-04-06",
+      "time": "19:30",
+      "location": "Hrvatsko narodno kazalište",
+      "category": "Theatre",
+      "description": "A breathtaking modern staging of Shakespeare's timeless masterpiece.",
+      "url": "https://www.hnk.hr",
+      "image": ""
+    }
+  ]
+}
